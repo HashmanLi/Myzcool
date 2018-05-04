@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+  <style type="text/css">
+    .container {
+      padding-top: 100px;
+    }
+    .row{height: 66px;}
+    .green{border-color:green;}
+    .red{border-color: red;}
+    span{
+      /* +  某个元素的下一个元素 */
+      display:none;
+      color: #ddd;
+      line-height: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container col-md-6 col-md-offset-3">
+    <form >
+  <!--用户模块-->
+    <div  class="form-group"> 
+        <div class="row">
+            <div class="col-md-6 col-lg-2">
+                 <label  for="user" >用户名</label>
+            </div>
+            <div class="col-md-6 col-lg-10">
+              <input class="form-control" type="text" id="user" placeholder="用户名">
+              <span>您应该输入以字母开头8-16位的用户名</span>
+            </div>
+        </div>
+    </div>
+  <!--密码模块-->
+    <div class="form-group">
+        <div class="row">
+              <div class="col-md-6 col-lg-2">
+                <label for="pw">请输入密码</label>
+              </div>
+
+              <div class="col-md-6 col-lg-10">
+                <input type="password" class="form-control" id="pw" placeholder="建议您使用两种及两种以上的组合">
+                <span>您应该输入由字母或者数字或者下划线组成的7-20位密码</span>
+              </div>
+        </div>
+    </div>
+  <!--确认密码模块-->
+    <div class="form-group">
+        <div class="row">
+              <div class="col-md-6 col-lg-2">
+                <label for="pw2">请再次输入密码</label>
+              </div>
+
+              <div class="col-md-6 col-lg-10">
+                <input type="password" class="form-control" id="pw2" placeholder="再次输入密码">
+                <span>两次输入的密码不一致</span>
+              </div>
+        </div>
+    </div>
+  <!--邮箱模块-->
+    <div class="form-group">
+        <div class="row">
+              <div class="col-md-6 col-lg-2">
+                <label for="emil">邮箱验证</label>
+              </div>
+
+              <div class="col-md-6 col-lg-10">
+                <input type="text" class="form-control" id="emil" placeholder="请输入邮箱">
+                <span>请输入正确格式的邮箱本站不支持国外邮箱</span>
+              </div>
+        </div>
+    </div>
+  <!--邮箱验证模块-->
+    <div class="form-group">
+        <div class="row">
+              <div class="col-md-6 col-lg-2">
+                <label for="emilw">邮箱验证码</label>
+              </div>
+
+              <div class="col-md-6 col-lg-10">
+                <input type="text" class="form-control" id="emilw" placeholder="请输入邮箱验证码">
+                <span>请输入正确格式的邮箱本站不支持国外邮箱</span>
+              </div>
+        </div>
+    </div>
+  <!--注册模块-->
+     <div class="form-group text-center">
+      <button type="submit" class="btn btn-primary" id="btn">注册</button>
+     </div>
+</form>
+</div>
+	
+  <script type="text/javascript">
+    var josnsum ={
+            user:{el:getel("user"),
+            reg:/^[a-zA-z]\d{7,15}$/
+          },
+        password:{
+            el:getel("pw"),
+            reg:/^[a-z0-9\u0021-\u002f]{6,20}$/i
+          },
+        repassword:{
+            el:getel("pw2")
+          },
+            emil:{
+            el:getel("emil"),
+            reg:/\w{6,20}@[a-z0-9]{2,6}\.[a-z]{2,6}/,
+          },
+            emilw:{
+            el:getel("emilw"),
+            reg:/[0-9]{6}/
+          }
+  }
+
+      function getel(str){
+        return  document.getElementById(str);
+      }
+      function checkmodel(el,reg){
+         var str = el.value; 
+        if(!reg.test(str)){
+          el.className += " red";
+          el.nextElementSibling.style.display = 'block';
+        }else {
+          el.className += " green";
+          el.nextElementSibling.style.display = "none";
+        }
+      }
+
+      /*------------usercheck-----------------*/
+
+      var userel = josnsum.user.el;
+      var userreg = josnsum.user.reg;
+      userel.onblur = function(){
+      this.className = this.className.replace(/\sred|\sgreen/,"");
+       checkmodel(this,userreg);
+       
+      }
+
+
+      /*------------passwordcheck-----------------*/
+
+      var passel = josnsum.password.el;
+      var passreg = josnsum.password.reg;
+      passel.onblur = function(){
+        this.className = this.className.replace(/\sred|\sgreen/,"");
+       checkmodel(this,passreg); 
+      }
+
+      
+      /*------------repasswordcheck-------------*/
+
+      var repassel = josnsum.repassword.el;
+      
+      repassel.onblur = function(){
+        this.className = this.className.replace(/\sred|\sgreen/,"");
+        if(!(passel.value == repassel.value)){
+          repassel.className += " red";
+          repassel.nextElementSibling.style.display = 'block';
+        }else {
+          repassel.className += " green";
+          repassel.nextElementSibling.style.display = 'none';
+        }
+        
+      }
+
+
+      /*------------emailcheck-----------------*/
+
+      var mailel = josnsum.emil.el;
+      var mailreg = josnsum.emil.reg;
+      mailel.onblur = function(){
+        this.className = this.className.replace(/\sred|\sgreen/,"");
+       checkmodel(this,mailreg); 
+      }
+
+      /*------------emailcheck-----------------*/
+
+      var mailwel = josnsum.emilw.el;
+      var mailwreg = josnsum.emilw.reg;
+      mailwel.onblur = function(){
+        this.className = this.className.replace(/\sred|\sgreen/,"");
+       checkmodel(this,mailwreg); 
+      }
+        /*------------submitcheck-----------------*/
+        var ninput = document.getElementsByTagName("input");
+        var count = 1;   
+        btn.onclick = function(e){
+          var evt = e || window.event;
+          for(var i = 0;i < ninput.length;i++){
+            var temp = null;
+            temp = /\sgreen/.test(ninput[i].className);
+            count+=temp;
+            // if(temp) {
+            //   count++;
+            // }
+          }
+          if(!(count == 6)){
+              evt.preventDefault();
+          }
+        }
+  </script>
+</body>
+</html>
